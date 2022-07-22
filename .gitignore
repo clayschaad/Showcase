@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Showcase.Domain/obj
+/Showcase.Domain/.vs/Showcase.Domain
+/Showcase.Domain/bin/Debug/net6.0
+/Showcase.Infrastructure/bin/Debug/net6.0
+/Showcase.Infrastructure/obj
+/Showcase.Test/bin/Debug/net6.0
+/Showcase.Test/obj
+/.vs/Showcase
