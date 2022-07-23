@@ -4,6 +4,6 @@ namespace Showcase.Domain
 {
     public interface ITemperatureService
     {
-        Task<Temperature> MeasureTemperatureAsync(CancellationToken cancellationToken);
+        Task<double> MeasureTemperatureAsync(Coordinates coordinates, CancellationToken cancellationToken);
     }
 }

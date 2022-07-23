@@ -1,4 +1,6 @@
-﻿namespace Showcase.Domain.Measurements
+﻿using Showcase.Domain.Measurements.Temperatures;
+
+namespace Showcase.Domain.Measurements
 {
     public class TemperatureService : ITemperatureService
     {
@@ -11,12 +13,12 @@
             this.temperaturePersistance = temperaturePersistance;
         }
 
-        public async Task<Temperature> MeasureTemperatureAsync(CancellationToken cancellationToken)
+        public async Task<double> MeasureTemperatureAsync(Coordinates coordinates, CancellationToken cancellationToken)
         {
-            var temperatureValue = await temperatureMeasurement.GetTemperatureAsync(cancellationToken);
+            var temperatureValue = await temperatureMeasurement.GetTemperatureAsync(coordinates, cancellationToken);
             var temperature = Temperature.NewMeasurement(temperatureValue, DateTime.UtcNow);
             await temperaturePersistance.SaveTemperatureAsync(temperature, cancellationToken);
-            return temperature;
+            return temperature.Value;
         }
     }
 }

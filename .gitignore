@@ -10,3 +10,4 @@
 /Showcase.Test/bin/Debug/net6.0
 /Showcase.Test/obj
 /.vs/Showcase
+/Showcase.Test/appsettings.local.json

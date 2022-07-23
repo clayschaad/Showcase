@@ -1,4 +1,4 @@
-﻿using Showcase.Domain.Measurements;
+﻿using Showcase.Domain.Measurements.Temperatures;
 
 namespace Showcase.Infrastructure.Persistence.Memory
 {

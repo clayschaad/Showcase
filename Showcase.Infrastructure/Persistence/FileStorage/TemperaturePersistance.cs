@@ -1,4 +1,4 @@
-﻿using Showcase.Domain.Measurements;
+﻿using Showcase.Domain.Measurements.Temperatures;
 using System.Text.Json;
 
 namespace Showcase.Infrastructure.Persistence.FileStorage

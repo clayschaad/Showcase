@@ -1,8 +1,8 @@
 using NUnit.Framework;
-using Showcase.Domain.Measurements;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
+using Showcase.Domain.Measurements.Temperatures;
 
 namespace Showcase.Test
 {
@@ -11,26 +11,26 @@ namespace Showcase.Test
         [Test]
         public async Task MemoryTemperaturePersistanceTest()
         {
-            var temperaturePersistance = new Infrastructure.Persistence.Memory.TemperaturePersistance();
-            await TestPersistance(temperaturePersistance, CancellationToken.None);
+            var testee = new Infrastructure.Persistence.Memory.TemperaturePersistance();
+            await TestPersistance(testee, CancellationToken.None);
         }
 
         [Test]
         public async Task FileStorageTemperaturePersistanceTest()
         {
-            var temperaturePersistance = new Infrastructure.Persistence.FileStorage.TemperaturePersistance();
-            await TestPersistance(temperaturePersistance, CancellationToken.None);
+            var testee = new Infrastructure.Persistence.FileStorage.TemperaturePersistance();
+            await TestPersistance(testee, CancellationToken.None);
         }
 
-        private async Task TestPersistance(ITemperaturePersistance temperaturePersistance, CancellationToken cancellationToken)
+        private async Task TestPersistance(ITemperaturePersistance testee, CancellationToken cancellationToken)
         {
             var temperature = Temperature.NewMeasurement(12.4, DateTime.UtcNow);
-            await temperaturePersistance.SaveTemperatureAsync(temperature, cancellationToken);
-            var loadedTemperature = await temperaturePersistance.GetTemperatureAsync(temperature.Id, cancellationToken);
+            await testee.SaveTemperatureAsync(temperature, cancellationToken);
+            var result = await testee.GetTemperatureAsync(temperature.Id, cancellationToken);
 
-            Assert.That(loadedTemperature!.Value, Is.EqualTo(temperature.Value));
-            Assert.That(loadedTemperature.Timestamp, Is.EqualTo(temperature.Timestamp));
-            Assert.That(loadedTemperature.Id, Is.EqualTo(temperature.Id));
+            Assert.That(result!.Value, Is.EqualTo(temperature.Value));
+            Assert.That(result.Timestamp, Is.EqualTo(temperature.Timestamp));
+            Assert.That(result.Id, Is.EqualTo(temperature.Id));
         }
     }
 }

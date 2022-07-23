@@ -4,6 +4,7 @@ using Moq;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
+using Showcase.Domain.Measurements.Temperatures;
 
 namespace Showcase.Test
 {
@@ -12,27 +13,22 @@ namespace Showcase.Test
         private Mock<ITemperatureMeasurement> temperatureMeasurementMock  = new Mock<ITemperatureMeasurement>();
         private Mock<ITemperaturePersistance> temperaturePersistanceMock = new Mock<ITemperaturePersistance>();
 
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public async Task MeasureTemperatureTest()
         {
             ArrangeTemperaturetMocks(21.2);
-            var temperatureService = new TemperatureService(temperatureMeasurementMock.Object, temperaturePersistanceMock.Object);
+            var testee = new TemperatureService(temperatureMeasurementMock.Object, temperaturePersistanceMock.Object);
+            var coordinates = new Coordinates(Latitude: 47.57, Longitude: 9.104);
 
-            var temperature = await temperatureService.MeasureTemperatureAsync(CancellationToken.None);
+            var result = await testee.MeasureTemperatureAsync(coordinates, CancellationToken.None);
 
-            Assert.That(temperature.Value, Is.EqualTo(21.2));
-            Assert.That(temperature.Id, Is.Not.EqualTo(Guid.Empty));
+            Assert.That(result, Is.EqualTo(21.2));
         }
 
         private void ArrangeTemperaturetMocks(double temperature)
         {
             temperatureMeasurementMock
-                .Setup(t => t.GetTemperatureAsync(CancellationToken.None))
+                .Setup(t => t.GetTemperatureAsync(It.IsAny<Coordinates>(), CancellationToken.None))
                 .Returns(Task.FromResult(temperature));
 
             temperaturePersistanceMock
