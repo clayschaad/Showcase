@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System;
 using Showcase.Domain.Measurements.Temperatures;
 
-namespace Showcase.Test
+namespace Showcase.Test.UnitTests
 {
     public class TemperaturePersistanceTests
     {

@@ -5,7 +5,7 @@ using Showcase.Infrastructure.Measurement;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Showcase.Test
+namespace Showcase.Test.UnitTests
 {
     public class TemperatureMeasurementTests
     {

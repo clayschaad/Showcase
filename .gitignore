@@ -11,3 +11,6 @@
 /Showcase.Test/obj
 /.vs/Showcase
 /Showcase.Test/appsettings.local.json
+/Showcase.WebApi/bin/Debug/net6.0
+/Showcase.WebApi/obj
+/Showcase.WebApi/appsettings.Development.json

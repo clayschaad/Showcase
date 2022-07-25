@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System;
 using Showcase.Domain.Measurements.Temperatures;
 
-namespace Showcase.Test
+namespace Showcase.Test.IntegrationTests
 {
     public class TemperatureServiceTests
     {
