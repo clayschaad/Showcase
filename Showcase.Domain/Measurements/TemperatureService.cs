@@ -21,7 +21,7 @@ namespace Showcase.Domain.Measurements
         public async Task<double> MeasureTemperatureAsync(Coordinates coordinates, CancellationToken cancellationToken)
         {
             var temperatureValue = await temperatureMeasurement.GetTemperatureAsync(coordinates, cancellationToken);
-            var temperature = Temperature.NewMeasurement(temperatureValue, DateTime.UtcNow);
+            var temperature = Temperature.NewMeasurement(temperatureValue, DateTime.UtcNow, coordinates);
             await temperaturePersistance.SaveTemperatureAsync(temperature, cancellationToken);
             return temperature.Value;
         }

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System;
 using Showcase.Domain.Measurements.Temperatures;
+using Showcase.Domain.Measurements;
 
 namespace Showcase.Test.UnitTests
 {
@@ -24,13 +25,15 @@ namespace Showcase.Test.UnitTests
 
         private async Task TestPersistance(ITemperaturePersistance testee, CancellationToken cancellationToken)
         {
-            var temperature = Temperature.NewMeasurement(12.4, DateTime.UtcNow);
+            var coordinates = new Coordinates(Latitude: 22.6, Longitude: 9);
+            var temperature = Temperature.NewMeasurement(12.4, DateTime.UtcNow, coordinates);
             await testee.SaveTemperatureAsync(temperature, cancellationToken);
             var result = await testee.GetTemperatureAsync(temperature.Id, cancellationToken);
 
             Assert.That(result!.Value, Is.EqualTo(temperature.Value));
             Assert.That(result.Timestamp, Is.EqualTo(temperature.Timestamp));
             Assert.That(result.Id, Is.EqualTo(temperature.Id));
+            Assert.That(result.Coordinates, Is.EqualTo(coordinates));
         }
     }
 }

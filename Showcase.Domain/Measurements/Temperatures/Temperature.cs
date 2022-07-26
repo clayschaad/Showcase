@@ -6,13 +6,16 @@
         public DateTime Timestamp { get; set; }
         public double Value { get; set; }
 
-        public static Temperature NewMeasurement(double value, DateTime timestamp)
+        public Coordinates? Coordinates { get; set; }
+
+        public static Temperature NewMeasurement(double value, DateTime timestamp, Coordinates coordinates)
         {
             return new Temperature
             {
                 Id = Guid.NewGuid(),
                 Timestamp = timestamp,
-                Value = value
+                Value = value,
+                Coordinates = coordinates
             };
         }
     }
