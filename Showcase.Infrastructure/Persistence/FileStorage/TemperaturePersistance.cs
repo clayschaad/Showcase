@@ -31,6 +31,12 @@ namespace Showcase.Infrastructure.Persistence.FileStorage
             await SaveAsnyc(temperatureList, storageFile);
         }
 
+        public async Task<IReadOnlyList<Temperature>> LoadTemperaturesAsync(CancellationToken cancellationToken)
+        {
+            var temperatures = await LoadAsnyc(storageFile);
+            return temperatures.ToList();
+        }
+
         private static async Task SaveAsnyc(IList<Temperature> temperatureList, string fileName)
         {
             var options = new JsonSerializerOptions()

@@ -17,7 +17,7 @@ namespace Showcase.Infrastructure.Measurement
         public async Task<double> GetTemperatureAsync(Coordinates coordinates, CancellationToken cancellation)
         {
             var httpClient = new HttpClient();
-            var options = configuration.GetSection(MeasurementOptions.Measurement).Get<MeasurementOptions>();
+            var options = configuration.GetSection(MeasurementOptions.SectionKey).Get<MeasurementOptions>();
 
             var temperature = await httpClient.GetFromJsonAsync<WeatherMeasurement>($"https://api.openweathermap.org/data/2.5/weather?lat={coordinates.Latitude}&lon={coordinates.Longitude}&units=metric&appid={options.OpenWeatherMapApiKey}");
             if (temperature == null)

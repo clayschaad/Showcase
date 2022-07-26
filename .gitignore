@@ -14,3 +14,4 @@
 /Showcase.WebApi/bin/Debug/net6.0
 /Showcase.WebApi/obj
 /Showcase.WebApi/appsettings.Development.json
+/Showcase.WebApi/measurement.db

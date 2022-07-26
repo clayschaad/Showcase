@@ -2,7 +2,8 @@
 {
     public interface ITemperaturePersistance
     {
-        Task SaveTemperatureAsync(Temperature temperature, CancellationToken cancellation);
-        Task<Temperature?> GetTemperatureAsync(Guid id, CancellationToken cancellation);
+        Task<IReadOnlyList<Temperature>> LoadTemperaturesAsync(CancellationToken cancellationToken);
+        Task SaveTemperatureAsync(Temperature temperature, CancellationToken cancellationToken);
+        Task<Temperature?> GetTemperatureAsync(Guid id, CancellationToken cancellationToken);
     }
 }

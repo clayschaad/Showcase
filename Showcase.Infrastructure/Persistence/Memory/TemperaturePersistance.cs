@@ -27,5 +27,10 @@ namespace Showcase.Infrastructure.Persistence.Memory
                 temperatureStorage.Add(temperature.Id, temperature);    
             }
         }
+
+        public async Task<IReadOnlyList<Temperature>> LoadTemperaturesAsync(CancellationToken cancellationToken)
+        {
+            return temperatureStorage.Values.ToList();
+        }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class MeasurementOptions
     {
-        public const string Measurement = "Measurement";
+        public const string SectionKey = "Measurement";
 
         public string OpenWeatherMapApiKey { get; set; } = String.Empty;
     }

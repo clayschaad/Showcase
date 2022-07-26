@@ -13,6 +13,11 @@ namespace Showcase.Domain.Measurements
             this.temperaturePersistance = temperaturePersistance;
         }
 
+        public async Task<IReadOnlyList<Temperature>> GetTemperatures(CancellationToken cancellationToken)
+        {
+            return await temperaturePersistance.LoadTemperaturesAsync(cancellationToken);
+        }
+
         public async Task<double> MeasureTemperatureAsync(Coordinates coordinates, CancellationToken cancellationToken)
         {
             var temperatureValue = await temperatureMeasurement.GetTemperatureAsync(coordinates, cancellationToken);

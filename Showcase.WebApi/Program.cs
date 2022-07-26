@@ -1,8 +1,4 @@
-using Showcase.Domain;
-using Showcase.Domain.Measurements;
-using Showcase.Domain.Measurements.Temperatures;
-using Showcase.Infrastructure.Measurement;
-using Showcase.Infrastructure.Persistence.Memory;
+using Showcase.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient(typeof(ITemperatureService), typeof(TemperatureService));
-builder.Services.AddTransient(typeof(ITemperatureMeasurement), typeof(TemperatureMeasurement));
-builder.Services.AddTransient(typeof(ITemperaturePersistance), typeof(TemperaturePersistance));
+builder.Services.AddDatabaseInfrastructureServices(builder.Configuration);
 
 var app = builder.Build();
 
