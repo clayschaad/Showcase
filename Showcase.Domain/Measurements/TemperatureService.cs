@@ -24,11 +24,8 @@ namespace Showcase.Domain.Measurements
         {
             var temperatureValue = await temperatureMeasurement.GetTemperatureAsync(coordinates, cancellationToken);
             var temperature = Temperature.NewMeasurement(temperatureValue, DateTime.UtcNow, coordinates);
-
             await temperatureSending.SendTemperatureAsync(temperature, cancellationToken);
-
-            await temperaturePersistance.SaveTemperatureAsync(temperature, cancellationToken);
-            return temperature.Value;
+            return temperatureValue;
         }
     }
 }

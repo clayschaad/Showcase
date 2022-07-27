@@ -11,7 +11,7 @@ namespace Showcase.Infrastructure.Persistence.Database
         public MeasurementDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<MeasurementDbContext>();
-            optionsBuilder.UseSqlite(@"Data Source=../Showcase.WebApi/measurement.db");
+            optionsBuilder.UseSqlite(@"Data Source=../measurement.db");
 
             return new MeasurementDbContext(optionsBuilder.Options);
         }
