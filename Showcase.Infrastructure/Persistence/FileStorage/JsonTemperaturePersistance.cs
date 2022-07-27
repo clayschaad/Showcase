@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace Showcase.Infrastructure.Persistence.FileStorage
 {
-    public class TemperaturePersistance : ITemperaturePersistance
+    public class JsonTemperaturePersistance : ITemperaturePersistance
     {
         private static readonly string storageFile = Path.GetTempFileName();
 

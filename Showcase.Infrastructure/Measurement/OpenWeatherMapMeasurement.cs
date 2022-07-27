@@ -5,11 +5,11 @@ using System.Net.Http.Json;
 
 namespace Showcase.Infrastructure.Measurement
 {
-    public class TemperatureMeasurement : ITemperatureMeasurement
+    public class OpenWeatherMapMeasurement : ITemperatureMeasurement
     {
         private readonly IConfiguration configuration;
 
-        public TemperatureMeasurement(IConfiguration configuration)
+        public OpenWeatherMapMeasurement(IConfiguration configuration)
         {
             this.configuration = configuration;
         }

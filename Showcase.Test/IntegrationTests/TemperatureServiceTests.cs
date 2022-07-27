@@ -12,12 +12,13 @@ namespace Showcase.Test.IntegrationTests
     {
         private Mock<ITemperatureMeasurement> temperatureMeasurementMock  = new Mock<ITemperatureMeasurement>();
         private Mock<ITemperaturePersistance> temperaturePersistanceMock = new Mock<ITemperaturePersistance>();
+        private Mock<ITemperatureSending> temperatureSendingMock = new Mock<ITemperatureSending>();
 
         [Test]
         public async Task MeasureTemperatureTest()
         {
             ArrangeTemperaturetMocks(21.2);
-            var testee = new TemperatureService(temperatureMeasurementMock.Object, temperaturePersistanceMock.Object);
+            var testee = new TemperatureService(temperatureMeasurementMock.Object, temperaturePersistanceMock.Object, temperatureSendingMock.Object);
             var coordinates = new Coordinates(Latitude: 47.57, Longitude: 9.104);
 
             var result = await testee.MeasureTemperatureAsync(coordinates, CancellationToken.None);
@@ -39,6 +40,9 @@ namespace Showcase.Test.IntegrationTests
                     Timestamp = DateTime.UtcNow,
                     Value = temperature
                 }));
+
+            temperatureSendingMock
+                .Setup(t => t.SendTemperatureAsync(It.IsAny<Temperature>(), CancellationToken.None));
         }
     }
 }

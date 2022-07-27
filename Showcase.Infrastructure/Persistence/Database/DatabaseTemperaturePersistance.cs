@@ -3,11 +3,11 @@ using Showcase.Domain.Measurements.Temperatures;
 
 namespace Showcase.Infrastructure.Persistence.Database
 {
-    public class TemperaturePersistance : ITemperaturePersistance
+    public class DatabaseTemperaturePersistance : ITemperaturePersistance
     {
         private readonly MeasurementDbContext measurementDbContext;
 
-        public TemperaturePersistance(MeasurementDbContext measurementDbContext)
+        public DatabaseTemperaturePersistance(MeasurementDbContext measurementDbContext)
         {
             this.measurementDbContext = measurementDbContext;
         }

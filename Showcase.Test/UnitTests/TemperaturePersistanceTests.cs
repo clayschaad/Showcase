@@ -12,14 +12,14 @@ namespace Showcase.Test.UnitTests
         [Test]
         public async Task MemoryTemperaturePersistanceTest()
         {
-            var testee = new Infrastructure.Persistence.Memory.TemperaturePersistance();
+            var testee = new Infrastructure.Persistence.Memory.MemoryTemperaturePersistance();
             await TestPersistance(testee, CancellationToken.None);
         }
 
         [Test]
         public async Task FileStorageTemperaturePersistanceTest()
         {
-            var testee = new Infrastructure.Persistence.FileStorage.TemperaturePersistance();
+            var testee = new Infrastructure.Persistence.FileStorage.JsonTemperaturePersistance();
             await TestPersistance(testee, CancellationToken.None);
         }
 

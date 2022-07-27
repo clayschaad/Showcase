@@ -2,7 +2,7 @@
 
 namespace Showcase.Infrastructure.Persistence.Memory
 {
-    public class TemperaturePersistance : ITemperaturePersistance
+    public class MemoryTemperaturePersistance : ITemperaturePersistance
     {
         private static Dictionary<Guid,Temperature> temperatureStorage = new Dictionary<Guid, Temperature>();
 

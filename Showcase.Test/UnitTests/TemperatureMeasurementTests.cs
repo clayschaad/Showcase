@@ -23,7 +23,7 @@ namespace Showcase.Test.UnitTests
         [Test]
         public async Task TemperatureMeasurementTest()
         {
-            var testee = new TemperatureMeasurement(configuration!);
+            var testee = new OpenWeatherMapMeasurement(configuration!);
             var coordinates = new Coordinates(Latitude: 47.57, Longitude: 9.104);
 
             var result = await testee.GetTemperatureAsync(coordinates, CancellationToken.None);

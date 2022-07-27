@@ -6,11 +6,13 @@ namespace Showcase.Domain.Measurements
     {
         private readonly ITemperatureMeasurement temperatureMeasurement;
         private readonly ITemperaturePersistance temperaturePersistance;
+        private readonly ITemperatureSending temperatureSending;
 
-        public TemperatureService(ITemperatureMeasurement temperatureMeasurement, ITemperaturePersistance temperaturePersistance)
+        public TemperatureService(ITemperatureMeasurement temperatureMeasurement, ITemperaturePersistance temperaturePersistance, ITemperatureSending temperatureSending)
         {
             this.temperatureMeasurement = temperatureMeasurement;
             this.temperaturePersistance = temperaturePersistance;
+            this.temperatureSending = temperatureSending;
         }
 
         public async Task<IReadOnlyList<Temperature>> GetTemperatures(CancellationToken cancellationToken)
@@ -22,6 +24,9 @@ namespace Showcase.Domain.Measurements
         {
             var temperatureValue = await temperatureMeasurement.GetTemperatureAsync(coordinates, cancellationToken);
             var temperature = Temperature.NewMeasurement(temperatureValue, DateTime.UtcNow, coordinates);
+
+            await temperatureSending.SendTemperatureAsync(temperature, cancellationToken);
+
             await temperaturePersistance.SaveTemperatureAsync(temperature, cancellationToken);
             return temperature.Value;
         }
