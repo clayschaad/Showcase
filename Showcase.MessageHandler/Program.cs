@@ -2,12 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 using Showcase.Domain.Measurements.Temperatures;
 using Showcase.Infrastructure;
 using Showcase.Infrastructure.Messaging;
-using System.Text;
-using System.Text.Json;
+using Showcase.Infrastructure.Messaging.RabbitMQ;
 
 namespace Showcase.MessageHandler
 {
@@ -21,25 +19,13 @@ namespace Showcase.MessageHandler
             using var host = CreateHost(args, configuration);
             using var serviceScope = CreateServiceScope(host);
 
-            var temperaturePersistance = serviceScope.ServiceProvider.GetRequiredService<ITemperaturePersistance>();
-
             var options = configuration.GetSection(MessagingOptions.SectionKey).Get<MessagingOptions>();
             var factory = new ConnectionFactory() { HostName = options.Hostname, Password = options.Password, UserName = options.Username, Port = options.Port };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.QueueDeclare(queue: options.Queue, durable: false, exclusive: false, autoDelete: false, arguments: null);
-
-                var consumer = new EventingBasicConsumer(channel);
-                consumer.Received += (model, ea) =>
-                {
-                    var body = ea.Body.ToArray();
-                    var message = Encoding.UTF8.GetString(body);
-                    var temperature = JsonSerializer.Deserialize<Temperature>(message);
-                    temperaturePersistance.SaveTemperatureAsync(temperature, CancellationToken.None);
-                };
-
-                channel.BasicConsume(queue: options.Queue, autoAck: true, consumer: consumer);
+                var temperaturePersistance = serviceScope.ServiceProvider.GetRequiredService<ITemperaturePersistance>();
+                RabbitMqConsumer.Consume<Temperature>(channel, options.Queue, (T) => temperaturePersistance.SaveTemperatureAsync(T, CancellationToken.None));
 
                 Console.WriteLine(" Press [enter] to exit.");
                 Console.ReadLine();
