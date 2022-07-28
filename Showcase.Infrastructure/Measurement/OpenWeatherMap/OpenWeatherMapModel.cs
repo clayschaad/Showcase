@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Showcase.Infrastructure.Measurement
+namespace Showcase.Infrastructure.Measurement.OpenWeatherMap
 {
     public record WeatherMeasurement(
         [property: JsonPropertyName("coord")] Coord Coord,

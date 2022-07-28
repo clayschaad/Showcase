@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Showcase.Domain;
 using Showcase.Domain.Measurements;
 using Showcase.Domain.Measurements.Weather;
-using Showcase.Infrastructure.Measurement;
+using Showcase.Infrastructure.Measurement.OpenWeatherMap;
 using Showcase.Infrastructure.Messaging.RabbitMQ;
 using Showcase.Infrastructure.Persistence.Database;
 

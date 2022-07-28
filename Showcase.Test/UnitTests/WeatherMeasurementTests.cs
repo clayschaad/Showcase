@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using Showcase.Domain.Measurements;
-using Showcase.Infrastructure.Measurement;
+using Showcase.Infrastructure.Measurement.OpenWeatherMap;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,7 +28,8 @@ namespace Showcase.Test.UnitTests
 
             var result = await testee.GetWeatherMeasurementAsync(coordinates, CancellationToken.None);
 
-            Assert.That(result, Is.InRange(-30, 40));
+            Assert.That(result.Temperature, Is.InRange(-30, 40));
+            Assert.That(result.Pressure, Is.InRange(500, 1500));
         }
     }
 }

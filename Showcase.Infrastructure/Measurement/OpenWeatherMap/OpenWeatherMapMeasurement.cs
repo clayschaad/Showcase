@@ -3,7 +3,7 @@ using Showcase.Domain.Measurements;
 using Showcase.Domain.Measurements.Weather;
 using System.Net.Http.Json;
 
-namespace Showcase.Infrastructure.Measurement
+namespace Showcase.Infrastructure.Measurement.OpenWeatherMap
 {
     public class OpenWeatherMapMeasurement : IWeatherMeasurement
     {
