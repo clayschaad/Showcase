@@ -4,20 +4,15 @@ using System.Text.Json;
 
 namespace Showcase.Infrastructure.Messaging.RabbitMQ
 {
-    public class RabbitMqPublisher
+    public class RabbitMqPublisher : RabbitMqBase
     {
-        public static void Publish<T>(IModel channel, string queue, T message)
+        public static void Publish<T>(IModel channel, string queue, T message) where T : notnull
         {
-            var ttl = new Dictionary<string, object>
-            {
-                { "x-message-ttl", 30000 }
-            };
-            channel.ExchangeDeclare($"{queue}-exchange", ExchangeType.Direct, arguments: ttl);
-
+            //ExchangeDeclare(channel, queue);
             var jsonOptions = new JsonSerializerOptions() { WriteIndented = true };
             var jsonString = JsonSerializer.Serialize(message, jsonOptions);
             var body = Encoding.UTF8.GetBytes(jsonString);
-            channel.BasicPublish($"{queue}-exchange", nameof(T), null, body);
+            channel.BasicPublish($"{queue}-exchange", GetRoutingKey(message), null, body);
         }
     }
 }

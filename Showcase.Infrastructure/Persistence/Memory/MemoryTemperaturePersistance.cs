@@ -1,36 +1,84 @@
-﻿using Showcase.Domain.Measurements.Temperatures;
+﻿using Showcase.Domain.Measurements.Weather;
 
 namespace Showcase.Infrastructure.Persistence.Memory
 {
-    public class MemoryTemperaturePersistance : ITemperaturePersistance
+    public class MemoryTemperaturePersistance : IWeatherMeasurementPersistance
     {
         private static Dictionary<Guid,Temperature> temperatureStorage = new Dictionary<Guid, Temperature>();
+        private static Dictionary<Guid, Pressure> pressureStorage = new Dictionary<Guid, Pressure>();
 
         public async Task<Temperature?> GetTemperatureAsync(Guid id, CancellationToken cancellation)
         {
-            if (temperatureStorage.ContainsKey(id))
+            return await Task.Run(() =>
             {
-                return temperatureStorage[id];
-            }
 
-            return null;
+                if (temperatureStorage.ContainsKey(id))
+                {
+                    return temperatureStorage[id];
+                }
+
+                return null;
+            });
         }
 
         public async Task SaveTemperatureAsync(Temperature temperature, CancellationToken cancellation)
         {
-            if (temperatureStorage.ContainsKey(temperature.Id))
+            await Task.Run(() =>
             {
-                temperatureStorage[temperature.Id] = temperature;
-            }
-            else
-            {
-                temperatureStorage.Add(temperature.Id, temperature);    
-            }
+                if (temperatureStorage.ContainsKey(temperature.Id))
+                {
+                    temperatureStorage[temperature.Id] = temperature;
+                }
+                else
+                {
+                    temperatureStorage.Add(temperature.Id, temperature);
+                }
+            });
         }
 
         public async Task<IReadOnlyList<Temperature>> LoadTemperaturesAsync(CancellationToken cancellationToken)
         {
-            return temperatureStorage.Values.ToList();
+            return await Task.Run(() =>
+            {
+                return temperatureStorage.Values.ToList();
+            });
+        }
+
+        public async Task<Pressure?> GetPressureAsync(Guid id, CancellationToken cancellation)
+        {
+            return await Task.Run(() =>
+            {
+
+                if (pressureStorage.ContainsKey(id))
+                {
+                    return pressureStorage[id];
+                }
+
+                return null;
+            });
+        }
+
+        public async Task SavePressureAsync(Pressure pressure, CancellationToken cancellation)
+        {
+            await Task.Run(() =>
+            {
+                if (pressureStorage.ContainsKey(pressure.Id))
+                {
+                    pressureStorage[pressure.Id] = pressure;
+                }
+                else
+                {
+                    pressureStorage.Add(pressure.Id, pressure);
+                }
+            });
+        }
+
+        public async Task<IReadOnlyList<Pressure>> LoadPressuresAsync(CancellationToken cancellationToken)
+        {
+            return await Task.Run(() =>
+            {
+                return pressureStorage.Values.ToList();
+            });
         }
     }
 }

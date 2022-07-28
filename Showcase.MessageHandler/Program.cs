@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
-using Showcase.Domain.Measurements.Temperatures;
+using Showcase.Domain.Measurements.Weather;
 using Showcase.Infrastructure;
 using Showcase.Infrastructure.Messaging;
 using Showcase.Infrastructure.Messaging.RabbitMQ;
@@ -24,8 +24,9 @@ namespace Showcase.MessageHandler
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                var temperaturePersistance = serviceScope.ServiceProvider.GetRequiredService<ITemperaturePersistance>();
-                RabbitMqConsumer.Consume<Temperature>(channel, options.Queue, (T) => temperaturePersistance.SaveTemperatureAsync(T, CancellationToken.None));
+                var weatherMeasurementPersistance = serviceScope.ServiceProvider.GetRequiredService<IWeatherMeasurementPersistance>();
+                RabbitMqConsumer.Consume<Temperature>(channel, options.Queue, (T) => weatherMeasurementPersistance.SaveTemperatureAsync(T, CancellationToken.None));
+                RabbitMqConsumer.Consume<Pressure>(channel, options.Queue, (T) => weatherMeasurementPersistance.SavePressureAsync(T, CancellationToken.None));
 
                 Console.WriteLine(" Press [enter] to exit.");
                 Console.ReadLine();

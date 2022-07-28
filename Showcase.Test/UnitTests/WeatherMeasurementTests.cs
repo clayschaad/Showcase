@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Showcase.Test.UnitTests
 {
-    public class TemperatureMeasurementTests
+    public class WeatherMeasurementTests
     {
         private IConfiguration? configuration;
 
@@ -26,7 +26,7 @@ namespace Showcase.Test.UnitTests
             var testee = new OpenWeatherMapMeasurement(configuration!);
             var coordinates = new Coordinates(Latitude: 47.57, Longitude: 9.104);
 
-            var result = await testee.GetTemperatureAsync(coordinates, CancellationToken.None);
+            var result = await testee.GetWeatherMeasurementAsync(coordinates, CancellationToken.None);
 
             Assert.That(result, Is.InRange(-30, 40));
         }

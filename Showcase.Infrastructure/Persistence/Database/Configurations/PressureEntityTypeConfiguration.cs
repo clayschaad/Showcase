@@ -4,9 +4,9 @@ using Showcase.Domain.Measurements.Weather;
 
 namespace Showcase.Infrastructure.Persistence.Database
 {
-    public class TemperatureEntityTypeConfiguration : IEntityTypeConfiguration<Temperature>
+    public class PressureEntityTypeConfiguration : IEntityTypeConfiguration<Pressure>
     {
-        public void Configure(EntityTypeBuilder<Temperature> builder)
+        public void Configure(EntityTypeBuilder<Pressure> builder)
         {
             builder.OwnsOne(e => e.Coordinates, CoordinatesEntityTypeConfiguration.Configure);
         }

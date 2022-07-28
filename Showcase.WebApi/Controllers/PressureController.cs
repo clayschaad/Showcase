@@ -6,19 +6,19 @@ namespace Showcase.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TemperatureController : ControllerBase
+    public class PressureController : ControllerBase
     {
         private readonly IWeatherMeasurementService weatherMeasurementService;
 
-        public TemperatureController(IWeatherMeasurementService weatherMeasurementService)
+        public PressureController(IWeatherMeasurementService weatherMeasurementService)
         {
             this.weatherMeasurementService = weatherMeasurementService;
         }
 
-        [HttpGet(Name = "GetTemperatures")]
-        public async Task<IReadOnlyList<Temperature>> GetAsync()
+        [HttpGet(Name = "GetPressures")]
+        public async Task<IReadOnlyList<Pressure>> GetAsync()
         {
-            return await weatherMeasurementService.GetTemperaturesAsync(CancellationToken.None);
+            return await weatherMeasurementService.GetPressuresAsync(CancellationToken.None);
         }
     }
 }

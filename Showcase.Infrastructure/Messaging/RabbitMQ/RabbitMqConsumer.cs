@@ -5,14 +5,14 @@ using System.Text.Json;
 
 namespace Showcase.Infrastructure.Messaging.RabbitMQ
 {
-    public class RabbitMqConsumer
+    public class RabbitMqConsumer : RabbitMqBase
     {
-        public static void Consume<T>(IModel channel, string queue, Action<T> action)
+        public static void Consume<T>(IModel channel, string queue, Action<T> action) where T : notnull
         {
-            channel.ExchangeDeclare($"{queue}-exchange", ExchangeType.Direct);
+            ExchangeDeclare(channel, queue);
             channel.QueueDeclare(queue, durable: true, exclusive: false, autoDelete: false, arguments: null);
 
-            channel.QueueBind(queue, $"{queue}-exchange", nameof(T));
+            channel.QueueBind(queue, $"{queue}-exchange", typeof(T).Name);
             channel.BasicQos(0, 10, false);
 
             var consumer = new EventingBasicConsumer(channel);

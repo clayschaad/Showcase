@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
-using Showcase.Domain.Measurements.Temperatures;
+using Showcase.Domain.Measurements.Weather;
 
 namespace Showcase.Infrastructure.Messaging.RabbitMQ
 {
-    public class RabbitMqSending : ITemperatureSending
+    public class RabbitMqSending : IWeatherMeasurementSender
     {
         private readonly IConfiguration configuration;
 
@@ -13,7 +13,7 @@ namespace Showcase.Infrastructure.Messaging.RabbitMQ
             this.configuration = configuration;
         }
 
-        public async Task SendTemperatureAsync(Temperature temperature, CancellationToken cancellationToken)
+        public async Task SendWeatherMeasurement<T>(T measurement, CancellationToken cancellationToken) where T : notnull
         {
             await Task.Run(() =>
             {
@@ -21,7 +21,7 @@ namespace Showcase.Infrastructure.Messaging.RabbitMQ
                 var factory = new ConnectionFactory() { HostName = options.Hostname, Password = options.Password, UserName = options.Username, Port = options.Port };
                 using var connection = factory.CreateConnection();
                 var channel = connection.CreateModel();
-                RabbitMqPublisher.Publish(channel, options.Queue, temperature);
+                RabbitMqPublisher.Publish(channel, options.Queue, measurement);
             });
         }
     }
