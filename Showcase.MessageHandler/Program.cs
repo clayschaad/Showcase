@@ -25,8 +25,9 @@ namespace Showcase.MessageHandler
             using (var channel = connection.CreateModel())
             {
                 var weatherMeasurementPersistance = serviceScope.ServiceProvider.GetRequiredService<IWeatherMeasurementPersistance>();
-                RabbitMqConsumer.Consume<Temperature>(channel, options.Queue, (T) => weatherMeasurementPersistance.SaveTemperatureAsync(T, CancellationToken.None));
-                RabbitMqConsumer.Consume<Pressure>(channel, options.Queue, (T) => weatherMeasurementPersistance.SavePressureAsync(T, CancellationToken.None));
+                RabbitMqHelper.Init(channel, options.Queue);
+                RabbitMqHelper.Consume<Temperature>(channel, options.Queue, (T) => weatherMeasurementPersistance.SaveTemperatureAsync(T, CancellationToken.None));
+                RabbitMqHelper.Consume<Pressure>(channel, options.Queue, (T) => weatherMeasurementPersistance.SavePressureAsync(T, CancellationToken.None));
 
                 Console.WriteLine(" Press [enter] to exit.");
                 Console.ReadLine();

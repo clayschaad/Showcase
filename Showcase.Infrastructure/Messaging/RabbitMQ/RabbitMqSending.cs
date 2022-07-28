@@ -21,7 +21,7 @@ namespace Showcase.Infrastructure.Messaging.RabbitMQ
                 var factory = new ConnectionFactory() { HostName = options.Hostname, Password = options.Password, UserName = options.Username, Port = options.Port };
                 using var connection = factory.CreateConnection();
                 var channel = connection.CreateModel();
-                RabbitMqPublisher.Publish(channel, options.Queue, measurement);
+                RabbitMqHelper.Publish(channel, options.Queue, measurement);
             });
         }
     }
