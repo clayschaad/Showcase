@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Showcase.Measurement.Application;
-using Showcase.Measurement.Domain.Weather.Aggregate;
 
 namespace Showcase.WebApi.Controllers
 {
@@ -20,8 +19,7 @@ namespace Showcase.WebApi.Controllers
         [HttpPost(Name = "Measure")]
         public async Task PostAsync(CancellationToken cancellation)
         {
-            var coordinates = new Coordinates(Latitude: 47.57, Longitude: 9.104);
-            await weatherMeasurementService.MeasureWeatherAsync(coordinates, cancellation);
+            await weatherMeasurementService.MeasureWeatherAsync(latitude: 47.57, longitude: 9.104, cancellation);
 
             var date = DateTime.Now.AddDays(-1);
             await financeMeasurementService.MeasureStockAsync("UBS", date, cancellation);

@@ -27,8 +27,9 @@ namespace Showcase.Measurement.Application.Weather
             return await weatherMeasurementPersistance.LoadPressuresAsync(cancellationToken);
         }
 
-        public async Task MeasureWeatherAsync(Coordinates coordinates, CancellationToken cancellationToken)
+        public async Task MeasureWeatherAsync(double latitude, double longitude, CancellationToken cancellationToken)
         {
+            var coordinates = Coordinates.New(latitude: latitude, longitude: longitude);
             var weatherMeasurementResult = await weatherMeasurement.GetWeatherMeasurementAsync(coordinates, cancellationToken);
 
             var temperature = Temperature.NewMeasurement(weatherMeasurementResult.Temperature, DateTime.UtcNow, coordinates);
