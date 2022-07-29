@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Showcase.Domain;
+using Showcase.Domain.Measurements;
 using Showcase.Domain.Measurements.Weather;
 
 namespace Showcase.WebApi.Controllers

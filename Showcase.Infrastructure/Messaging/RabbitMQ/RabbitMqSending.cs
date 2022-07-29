@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
-using Showcase.Domain.Measurements.Weather;
+using Showcase.Domain.Measurements;
 
 namespace Showcase.Infrastructure.Messaging.RabbitMQ
 {
-    public class RabbitMqSending : IWeatherMeasurementSender
+    public class RabbitMqSending : IMeasurementSender
     {
         private readonly IConfiguration configuration;
 
@@ -13,7 +13,7 @@ namespace Showcase.Infrastructure.Messaging.RabbitMQ
             this.configuration = configuration;
         }
 
-        public async Task SendWeatherMeasurement<T>(T measurement, CancellationToken cancellationToken) where T : notnull
+        public async Task SendMeasurement<T>(T measurement, CancellationToken cancellationToken) where T : notnull
         {
             await Task.Run(() =>
             {

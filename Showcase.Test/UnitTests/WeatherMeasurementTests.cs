@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
-using Showcase.Domain.Measurements;
+using Showcase.Domain.Measurements.Weather;
 using Showcase.Infrastructure.Measurement.OpenWeatherMap;
 using System.Threading;
 using System.Threading.Tasks;

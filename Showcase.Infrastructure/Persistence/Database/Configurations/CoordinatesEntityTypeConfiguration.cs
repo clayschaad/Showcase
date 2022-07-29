@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Showcase.Domain.Measurements;
+using Showcase.Domain.Measurements.Weather;
 
 namespace Showcase.Infrastructure.Persistence.Database
 {

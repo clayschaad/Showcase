@@ -14,7 +14,7 @@ namespace Showcase.Test.IntegrationTests
     {
         private Mock<IWeatherMeasurement> weatherMeasurementMock  = new Mock<IWeatherMeasurement>();
         private Mock<IWeatherMeasurementPersistance> weatherMeasurementPersistanceMock = new Mock<IWeatherMeasurementPersistance>();
-        private Mock<IWeatherMeasurementSender> weatherMeasurementSenderMock = new Mock<IWeatherMeasurementSender>();
+        private Mock<IMeasurementSender> weatherMeasurementSenderMock = new Mock<IMeasurementSender>();
 
         private List<Temperature> temperatureQueue = new List<Temperature>();
         private List<Pressure> pressureQueue = new List<Pressure>();
@@ -43,11 +43,11 @@ namespace Showcase.Test.IntegrationTests
                 .Returns(Task.FromResult(weatherMeasurement));
 
             weatherMeasurementSenderMock
-                .Setup(t => t.SendWeatherMeasurement(It.IsAny<Temperature>(), CancellationToken.None))
+                .Setup(t => t.SendMeasurement(It.IsAny<Temperature>(), CancellationToken.None))
                 .Callback((Temperature t, CancellationToken c) => temperatureQueue.Add(t));
 
             weatherMeasurementSenderMock
-                .Setup(t => t.SendWeatherMeasurement(It.IsAny<Pressure>(), CancellationToken.None))
+                .Setup(t => t.SendMeasurement(It.IsAny<Pressure>(), CancellationToken.None))
                 .Callback((Pressure p, CancellationToken c) => pressureQueue.Add(p));
         }
     }

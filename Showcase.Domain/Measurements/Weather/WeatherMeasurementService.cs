@@ -6,13 +6,13 @@ namespace Showcase.Domain.Measurements
     {
         private readonly IWeatherMeasurement weatherMeasurement;
         private readonly IWeatherMeasurementPersistance weatherMeasurementPersistance;
-        private readonly IWeatherMeasurementSender weatherMeasurementSender;
+        private readonly IMeasurementSender measurementSender;
 
-        public WeatherMeasurementService(IWeatherMeasurement weatherMeasurement, IWeatherMeasurementPersistance weatherMeasurementPersistance, IWeatherMeasurementSender weatherMeasurementSender)
+        public WeatherMeasurementService(IWeatherMeasurement weatherMeasurement, IWeatherMeasurementPersistance weatherMeasurementPersistance, IMeasurementSender measurementSender)
         {
             this.weatherMeasurement = weatherMeasurement;
             this.weatherMeasurementPersistance = weatherMeasurementPersistance;
-            this.weatherMeasurementSender = weatherMeasurementSender;
+            this.measurementSender = measurementSender;
         }
 
         public async Task<IReadOnlyList<Temperature>> GetTemperaturesAsync(CancellationToken cancellationToken)
@@ -30,10 +30,10 @@ namespace Showcase.Domain.Measurements
             var weatherMeasurementResult = await weatherMeasurement.GetWeatherMeasurementAsync(coordinates, cancellationToken);
 
             var temperature = Temperature.NewMeasurement(weatherMeasurementResult.Temperature, DateTime.UtcNow, coordinates);
-            await weatherMeasurementSender.SendWeatherMeasurement(temperature, cancellationToken);
+            await measurementSender.SendMeasurement(temperature, cancellationToken);
 
             var pressure = Pressure.NewMeasurement(weatherMeasurementResult.Pressure, DateTime.UtcNow, coordinates);
-            await weatherMeasurementSender.SendWeatherMeasurement(pressure, cancellationToken);
+            await measurementSender.SendMeasurement(pressure, cancellationToken);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Showcase.MessageHandler
         {
             var host = Host.CreateDefaultBuilder(args)
                 .ConfigureServices((_, services) =>
-                    services.AddDatabaseInfrastructureServices(configuration))
+                    services.AddInfrastructureServices(configuration))
                 .Build();
 
             return host;
