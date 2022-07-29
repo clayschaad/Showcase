@@ -1,4 +1,4 @@
-﻿namespace Showcase.Domain.Measurements.Weather
+﻿namespace Showcase.Measurement.Domain.Weather
 {
     public interface IWeatherMeasurement
     {

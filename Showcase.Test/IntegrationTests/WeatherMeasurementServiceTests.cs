@@ -1,12 +1,12 @@
 using NUnit.Framework;
-using Showcase.Domain.Measurements;
 using Moq;
 using System.Threading;
 using System.Threading.Tasks;
-using System;
-using Showcase.Domain.Measurements.Weather;
 using System.Collections.Generic;
 using System.Linq;
+using Showcase.Measurement.Domain.Weather;
+using Showcase.Measurement.Domain;
+using Showcase.Measurement.Application.Weather;
 
 namespace Showcase.Test.IntegrationTests
 {

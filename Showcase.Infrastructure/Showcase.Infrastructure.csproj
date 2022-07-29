@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Showcase.Domain\Showcase.Domain.csproj" />
+    <ProjectReference Include="..\Showcase.Domain\Showcase.Measurement.csproj" />
   </ItemGroup>
 
 </Project>

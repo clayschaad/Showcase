@@ -1,4 +1,4 @@
-﻿namespace Showcase.Domain.Measurements.Finance
+﻿namespace Showcase.Measurement.Domain.Finance
 {
     public interface IFinanceMeasurement
     {

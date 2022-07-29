@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Showcase.Domain.Measurements;
-using Showcase.Domain.Measurements.Finance;
+using Showcase.Measurement.Domain;
+using Showcase.Measurement.Domain.Finance;
 using System.Net.Http.Json;
 
 namespace Showcase.Infrastructure.Measurement.Polygon

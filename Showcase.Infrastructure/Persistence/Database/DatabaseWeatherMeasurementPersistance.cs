@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Showcase.Domain.Measurements.Weather;
+using Showcase.Measurement.Domain.Weather;
 
 namespace Showcase.Infrastructure.Persistence.Database
 {

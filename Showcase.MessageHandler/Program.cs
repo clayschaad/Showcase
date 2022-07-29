@@ -2,11 +2,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
-using Showcase.Domain.Measurements.Finance;
-using Showcase.Domain.Measurements.Weather;
 using Showcase.Infrastructure;
 using Showcase.Infrastructure.Messaging;
 using Showcase.Infrastructure.Messaging.RabbitMQ;
+using Showcase.Measurement.Domain.Finance;
+using Showcase.Measurement.Domain.Weather;
 
 namespace Showcase.MessageHandler
 {

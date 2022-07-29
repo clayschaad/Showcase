@@ -1,4 +1,4 @@
-﻿namespace Showcase.Domain.Measurements
+﻿namespace Showcase.Measurement.Domain
 {
     public class MeasurementException : Exception
     {

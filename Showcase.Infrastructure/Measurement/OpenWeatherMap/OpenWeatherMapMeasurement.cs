@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Showcase.Domain.Measurements;
-using Showcase.Domain.Measurements.Weather;
+using Showcase.Measurement.Domain;
+using Showcase.Measurement.Domain.Weather;
 using System.Net.Http.Json;
 
 namespace Showcase.Infrastructure.Measurement.OpenWeatherMap
@@ -14,7 +14,7 @@ namespace Showcase.Infrastructure.Measurement.OpenWeatherMap
             this.configuration = configuration;
         }
 
-        public async Task<Domain.Measurements.Weather.WeatherMeasurement> GetWeatherMeasurementAsync(Coordinates coordinates, CancellationToken cancellation)
+        public async Task<Showcase.Measurement.Domain.Weather.WeatherMeasurement> GetWeatherMeasurementAsync(Coordinates coordinates, CancellationToken cancellation)
         {
             var httpClient = new HttpClient();
             var options = configuration.GetSection(MeasurementOptions.SectionKey).Get<MeasurementOptions>();
@@ -25,7 +25,7 @@ namespace Showcase.Infrastructure.Measurement.OpenWeatherMap
                 throw new MeasurementException("Cannot parse measurement result");
             }
 
-            return new Domain.Measurements.Weather.WeatherMeasurement(Temperature: weatherMeasurement.Main.Temp, Pressure: weatherMeasurement.Main.Pressure);
+            return new Showcase.Measurement.Domain.Weather.WeatherMeasurement(Temperature: weatherMeasurement.Main.Temp, Pressure: weatherMeasurement.Main.Pressure);
         }
     }
 }

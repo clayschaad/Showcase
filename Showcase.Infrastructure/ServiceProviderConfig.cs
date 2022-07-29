@@ -1,14 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Showcase.Domain;
-using Showcase.Domain.Measurements;
-using Showcase.Domain.Measurements.Finance;
-using Showcase.Domain.Measurements.Weather;
 using Showcase.Infrastructure.Measurement.OpenWeatherMap;
 using Showcase.Infrastructure.Measurement.Polygon;
 using Showcase.Infrastructure.Messaging.RabbitMQ;
 using Showcase.Infrastructure.Persistence.Database;
+using Showcase.Measurement.Application;
+using Showcase.Measurement.Application.Finance;
+using Showcase.Measurement.Application.Weather;
+using Showcase.Measurement.Domain;
+using Showcase.Measurement.Domain.Finance;
+using Showcase.Measurement.Domain.Weather;
 
 namespace Showcase.Infrastructure
 {

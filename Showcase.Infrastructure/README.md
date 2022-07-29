@@ -5,7 +5,7 @@ Infrastructure layer contains most of your application’s dependencies on exter
 ## Measurement
 
 https://openweathermap.org/current
-https://www.alphavantage.co/documentation/
+
 https://polygon.io/
 
 Generate classes for json: https://json2csharp.com/

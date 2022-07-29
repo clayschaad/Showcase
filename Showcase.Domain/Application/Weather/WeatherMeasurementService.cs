@@ -1,6 +1,7 @@
-﻿using Showcase.Domain.Measurements.Weather;
+﻿using Showcase.Measurement.Domain;
+using Showcase.Measurement.Domain.Weather;
 
-namespace Showcase.Domain.Measurements
+namespace Showcase.Measurement.Application.Weather
 {
     public class WeatherMeasurementService : IWeatherMeasurementService
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
-using Showcase.Domain.Measurements;
+using Showcase.Measurement.Domain;
 
 namespace Showcase.Infrastructure.Messaging.RabbitMQ
 {

@@ -1,6 +1,7 @@
-﻿using Showcase.Domain.Measurements.Finance;
+﻿using Showcase.Measurement.Domain;
+using Showcase.Measurement.Domain.Finance;
 
-namespace Showcase.Domain.Measurements
+namespace Showcase.Measurement.Application.Finance
 {
     public class FinanceMeasurementService : IFinanceMeasurementService
     {
