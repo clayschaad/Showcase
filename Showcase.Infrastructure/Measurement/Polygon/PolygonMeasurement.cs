@@ -14,7 +14,7 @@ namespace Showcase.Infrastructure.Measurement.Polygon
             this.configuration = configuration;
         }
 
-        public async Task<StockMeasurement> GetStockMeasurementAsync(string symbol, DateTime date, CancellationToken cancellation)
+        public async Task<StockRecord> GetStockMeasurementAsync(string symbol, DateTime date, CancellationToken cancellation)
         {
             var httpClient = new HttpClient();
             var options = configuration.GetSection(MeasurementOptions.SectionKey).Get<MeasurementOptions>();
@@ -25,7 +25,7 @@ namespace Showcase.Infrastructure.Measurement.Polygon
                 throw new MeasurementException("Cannot parse measurement result");
             }
 
-            return new StockMeasurement(Open: stockMeasurement.Open, Close: stockMeasurement.Close, LastRefresh: stockMeasurement.From);
+            return new StockRecord(Open: stockMeasurement.Open, Close: stockMeasurement.Close, LastRefresh: stockMeasurement.From);
         }
     }
 }

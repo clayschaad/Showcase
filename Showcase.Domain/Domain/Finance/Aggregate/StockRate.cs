@@ -1,4 +1,4 @@
-﻿namespace Showcase.Measurement.Domain.Finance
+﻿namespace Showcase.Measurement.Domain.Finance.Aggregate
 {
     public class StockRate
     {

@@ -1,4 +1,6 @@
-﻿namespace Showcase.Measurement.Domain.Weather
+﻿using Showcase.Measurement.Domain.Weather.Aggregate;
+
+namespace Showcase.Measurement.Domain.Weather
 {
     public interface IWeatherMeasurementPersistance
     {

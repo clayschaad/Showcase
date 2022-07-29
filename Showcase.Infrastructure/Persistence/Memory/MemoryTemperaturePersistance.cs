@@ -1,4 +1,5 @@
 ﻿using Showcase.Measurement.Domain.Weather;
+using Showcase.Measurement.Domain.Weather.Aggregate;
 
 namespace Showcase.Infrastructure.Persistence.Memory
 {

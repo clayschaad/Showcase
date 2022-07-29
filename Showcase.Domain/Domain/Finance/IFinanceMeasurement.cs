@@ -2,6 +2,6 @@
 {
     public interface IFinanceMeasurement
     {
-        Task<StockMeasurement> GetStockMeasurementAsync(string symbol, DateTime date, CancellationToken cancellation);
+        Task<StockRecord> GetStockMeasurementAsync(string symbol, DateTime date, CancellationToken cancellation);
     }
 }

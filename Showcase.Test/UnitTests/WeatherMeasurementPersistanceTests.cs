@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
-using Showcase.Measurement.Domain.Weather;
+using Showcase.Measurement.Domain.Weather.Aggregate;
 
 namespace Showcase.Test.UnitTests
 {

@@ -1,5 +1,6 @@
 ﻿using Showcase.Measurement.Domain;
 using Showcase.Measurement.Domain.Finance;
+using Showcase.Measurement.Domain.Finance.Aggregate;
 
 namespace Showcase.Measurement.Application.Finance
 {

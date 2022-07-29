@@ -1,7 +1,9 @@
-﻿namespace Showcase.Measurement.Domain.Weather
+﻿using Showcase.Measurement.Domain.Weather.Aggregate;
+
+namespace Showcase.Measurement.Domain.Weather
 {
     public interface IWeatherMeasurement
     {
-        Task<WeatherMeasurement> GetWeatherMeasurementAsync(Coordinates coordinates, CancellationToken cancellation);
+        Task<WeatherRecord> GetWeatherMeasurementAsync(Coordinates coordinates, CancellationToken cancellation);
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using Showcase.Measurement.Domain.Weather;
 using Showcase.Measurement.Domain;
 using Showcase.Measurement.Application.Weather;
+using Showcase.Measurement.Domain.Weather.Aggregate;
 
 namespace Showcase.Test.IntegrationTests
 {
@@ -22,7 +23,7 @@ namespace Showcase.Test.IntegrationTests
         [Test]
         public async Task MeasureTemperatureTest()
         {
-            ArrangeWeatherMeasurementMocks(new WeatherMeasurement(Temperature: 21.2, Pressure: 1234));
+            ArrangeWeatherMeasurementMocks(new WeatherRecord(Temperature: 21.2, Pressure: 1234));
             var testee = new WeatherMeasurementService(weatherMeasurementMock.Object, weatherMeasurementPersistanceMock.Object, weatherMeasurementSenderMock.Object);
             var coordinates = new Coordinates(Latitude: 47.57, Longitude: 9.104);
 
@@ -36,11 +37,11 @@ namespace Showcase.Test.IntegrationTests
             Assert.That(pressureQueue.First().Coordinates, Is.EqualTo(coordinates));
         }
 
-        private void ArrangeWeatherMeasurementMocks(WeatherMeasurement weatherMeasurement)
+        private void ArrangeWeatherMeasurementMocks(WeatherRecord weatherRecord)
         {
             weatherMeasurementMock
                 .Setup(t => t.GetWeatherMeasurementAsync(It.IsAny<Coordinates>(), CancellationToken.None))
-                .Returns(Task.FromResult(weatherMeasurement));
+                .Returns(Task.FromResult(weatherRecord));
 
             weatherMeasurementSenderMock
                 .Setup(t => t.SendMeasurement(It.IsAny<Temperature>(), CancellationToken.None))

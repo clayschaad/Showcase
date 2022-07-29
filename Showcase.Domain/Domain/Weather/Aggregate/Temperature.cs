@@ -1,6 +1,6 @@
-﻿namespace Showcase.Measurement.Domain.Weather
+﻿namespace Showcase.Measurement.Domain.Weather.Aggregate
 {
-    public class Pressure
+    public class Temperature
     {
         public Guid Id { get; set; }
         public DateTime Timestamp { get; set; }
@@ -8,9 +8,9 @@
 
         public Coordinates? Coordinates { get; set; }
 
-        public static Pressure NewMeasurement(double value, DateTime timestamp, Coordinates coordinates)
+        public static Temperature NewMeasurement(double value, DateTime timestamp, Coordinates coordinates)
         {
-            return new Pressure
+            return new Temperature
             {
                 Id = Guid.NewGuid(),
                 Timestamp = timestamp,

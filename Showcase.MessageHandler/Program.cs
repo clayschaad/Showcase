@@ -5,8 +5,9 @@ using RabbitMQ.Client;
 using Showcase.Infrastructure;
 using Showcase.Infrastructure.Messaging;
 using Showcase.Infrastructure.Messaging.RabbitMQ;
-using Showcase.Measurement.Domain.Finance;
+using Showcase.Measurement.Domain.Finance.Aggregate;
 using Showcase.Measurement.Domain.Weather;
+using Showcase.Measurement.Domain.Weather.Aggregate;
 
 namespace Showcase.MessageHandler
 {
