@@ -22,7 +22,7 @@ namespace Showcase.Infrastructure.Measurement.OpenWeatherMap
             var weatherMeasurement = await httpClient.GetFromJsonAsync<WeatherMeasurement>($"https://api.openweathermap.org/data/2.5/weather?lat={coordinates.Latitude}&lon={coordinates.Longitude}&units=metric&appid={options.OpenWeatherMapApiKey}");
             if (weatherMeasurement == null)
             {
-                throw new MeasurementException("Cannot parse temperature measurement result");
+                throw new MeasurementException("Cannot parse measurement result");
             }
 
             return new Domain.Measurements.Weather.WeatherMeasurement(Temperature: weatherMeasurement.Main.Temp, Pressure: weatherMeasurement.Main.Pressure);

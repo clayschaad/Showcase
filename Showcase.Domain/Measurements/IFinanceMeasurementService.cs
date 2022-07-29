@@ -2,6 +2,6 @@
 {
     public interface IFinanceMeasurementService
     {
-        Task MeasureStockAsync(string symbol, CancellationToken cancellationToken);
+        Task MeasureStockAsync(string symbol, DateTime date, CancellationToken cancellationToken);
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
+using Showcase.Domain.Measurements.Finance;
 using Showcase.Domain.Measurements.Weather;
 using Showcase.Infrastructure;
 using Showcase.Infrastructure.Messaging;
@@ -24,10 +25,13 @@ namespace Showcase.MessageHandler
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                var weatherMeasurementPersistance = serviceScope.ServiceProvider.GetRequiredService<IWeatherMeasurementPersistance>();
                 RabbitMqHelper.Init(channel, options.Queue);
+
+                var weatherMeasurementPersistance = serviceScope.ServiceProvider.GetRequiredService<IWeatherMeasurementPersistance>();
                 RabbitMqHelper.Consume<Temperature>(channel, options.Queue, (T) => weatherMeasurementPersistance.SaveTemperatureAsync(T, CancellationToken.None));
                 RabbitMqHelper.Consume<Pressure>(channel, options.Queue, (T) => weatherMeasurementPersistance.SavePressureAsync(T, CancellationToken.None));
+                
+                RabbitMqHelper.Consume<StockRate>(channel, options.Queue, (T) => { });
 
                 Console.WriteLine(" Press [enter] to exit.");
                 Console.ReadLine();

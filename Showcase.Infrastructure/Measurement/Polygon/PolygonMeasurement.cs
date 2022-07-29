@@ -14,13 +14,12 @@ namespace Showcase.Infrastructure.Measurement.Polygon
             this.configuration = configuration;
         }
 
-        public async Task<StockMeasurement> GetStockMeasurementAsync(string symbol, CancellationToken cancellation)
+        public async Task<StockMeasurement> GetStockMeasurementAsync(string symbol, DateTime date, CancellationToken cancellation)
         {
             var httpClient = new HttpClient();
             var options = configuration.GetSection(MeasurementOptions.SectionKey).Get<MeasurementOptions>();
 
-            var date = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
-            var stockMeasurement = await httpClient.GetFromJsonAsync<PolygonModel>($"https://api.polygon.io/v1/open-close/{symbol}/{date}?adjusted=true&apiKey={options.PolygonApiKey}");
+            var stockMeasurement = await httpClient.GetFromJsonAsync<PolygonModel>($"https://api.polygon.io/v1/open-close/{symbol}/{date:yyyy-MM-dd}?adjusted=true&apiKey={options.PolygonApiKey}");
             if (stockMeasurement == null)
             {
                 throw new MeasurementException("Cannot parse measurement result");

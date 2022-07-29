@@ -22,7 +22,9 @@ namespace Showcase.WebApi.Controllers
         {
             var coordinates = new Coordinates(Latitude: 47.57, Longitude: 9.104);
             await weatherMeasurementService.MeasureWeatherAsync(coordinates, cancellation);
-            await financeMeasurementService.MeasureStockAsync("UBS", cancellation);
+
+            var date = DateTime.Now.AddDays(-1);
+            await financeMeasurementService.MeasureStockAsync("UBS", date, cancellation);
         }
     }
 }

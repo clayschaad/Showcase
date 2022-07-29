@@ -1,17 +1,17 @@
 ﻿namespace Showcase.Domain.Measurements.Finance
 {
-    public class Rate
+    public class StockRate
     {
         public Guid Id { get; set; }
         public DateTime Timestamp { get; set; }
         public double Open { get; set; }
         public double Close { get; set; }
 
-        public string Symbol { get; set; }
+        public string Symbol { get; set; } = null!;
 
-        public static Rate NewMeasurement(double open, double close, DateTime timestamp, string symbol)
+        public static StockRate NewMeasurement(double open, double close, DateTime timestamp, string symbol)
         {
-            return new Rate
+            return new StockRate
             {
                 Id = Guid.NewGuid(),
                 Timestamp = timestamp,

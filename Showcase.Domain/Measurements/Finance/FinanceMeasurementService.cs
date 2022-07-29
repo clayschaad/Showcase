@@ -13,11 +13,11 @@ namespace Showcase.Domain.Measurements
             this.measurementSender = measurementSender;
         }
 
-        public async Task MeasureStockAsync(string symbol, CancellationToken cancellationToken)
+        public async Task MeasureStockAsync(string symbol, DateTime date, CancellationToken cancellationToken)
         {
-            var measurement = await financeMeasurement.GetStockMeasurementAsync(symbol, cancellationToken);
+            var measurement = await financeMeasurement.GetStockMeasurementAsync(symbol, date, cancellationToken);
 
-            var rate = Rate.NewMeasurement(open: measurement.Open, close: measurement.Close, symbol: symbol, timestamp: measurement.LastRefresh);
+            var rate = StockRate.NewMeasurement(open: measurement.Open, close: measurement.Close, symbol: symbol, timestamp: measurement.LastRefresh);
             await measurementSender.SendMeasurement(rate, cancellationToken);
         }
     }
