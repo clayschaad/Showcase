@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Showcase.Measurement.Domain;
 using Showcase.Measurement.Domain.Finance;
-using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace Showcase.Infrastructure.Measurement.Polygon
 {
@@ -14,18 +14,21 @@ namespace Showcase.Infrastructure.Measurement.Polygon
             this.configuration = configuration;
         }
 
-        public async Task<StockRecord> GetStockMeasurementAsync(string symbol, DateTime date, CancellationToken cancellation)
+        public async Task<StockRecord> GetStockMeasurementAsync(string symbol, DateTime date, CancellationToken cancellationToken)
         {
             var httpClient = new HttpClient();
             var options = configuration.GetSection(MeasurementOptions.SectionKey).Get<MeasurementOptions>();
 
-            var stockMeasurement = await httpClient.GetFromJsonAsync<PolygonModel>($"https://api.polygon.io/v1/open-close/{symbol}/{date:yyyy-MM-dd}?adjusted=true&apiKey={options.PolygonApiKey}");
-            if (stockMeasurement == null)
+            var requestUrl = $"https://api.polygon.io/v1/open-close/{symbol}/{date:yyyy-MM-dd}?adjusted=true&apiKey={options.PolygonApiKey}";
+            var response = await httpClient.GetAsync(requestUrl, cancellationToken);
+            if (!response.IsSuccessStatusCode)
             {
-                throw new MeasurementException("Cannot parse measurement result");
+                throw new MeasurementException($"Cannot parse measurement result: {response.ReasonPhrase}");
             }
 
-            return new StockRecord(Open: stockMeasurement.Open, Close: stockMeasurement.Close, LastRefresh: stockMeasurement.From);
+            var jsonString = await response.Content.ReadAsStringAsync(cancellationToken);
+            var stockMeasurement = JsonSerializer.Deserialize<PolygonModel>(jsonString);
+            return new StockRecord(Open: stockMeasurement!.Open, Close: stockMeasurement.Close, LastRefresh: stockMeasurement.From);
         }
     }
 }
