@@ -25,7 +25,7 @@ namespace Showcase.Measurement.Application.Weather
 
         public async Task SaveWeatherAsync(WeatherRecord weatherRecord, CancellationToken cancellationToken)
         {
-            var location = await weatherMeasurementPersistance.GetLoctionAsync(latitued: weatherRecord.Latitude, longitued: weatherRecord.Longitude, cancellationToken);
+            var location = await weatherMeasurementPersistance.GetLocationAsync(latitued: weatherRecord.Latitude, longitued: weatherRecord.Longitude, cancellationToken);
             if (location == null)
             {
                 location = Location.New(latitude: weatherRecord.Latitude, longitude: weatherRecord.Longitude);

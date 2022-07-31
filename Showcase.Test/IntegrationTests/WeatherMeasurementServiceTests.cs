@@ -7,7 +7,6 @@ using System.Linq;
 using Showcase.Measurement.Domain.Weather;
 using Showcase.Measurement.Domain;
 using Showcase.Measurement.Application.Weather;
-using Showcase.Measurement.Domain.Weather.Aggregate;
 
 namespace Showcase.Test.IntegrationTests
 {
@@ -17,8 +16,7 @@ namespace Showcase.Test.IntegrationTests
         private Mock<IWeatherMeasurementPersistance> weatherMeasurementPersistanceMock = new Mock<IWeatherMeasurementPersistance>();
         private Mock<IMeasurementSender> weatherMeasurementSenderMock = new Mock<IMeasurementSender>();
 
-        private List<Temperature> temperatureQueue = new List<Temperature>();
-        private List<Pressure> pressureQueue = new List<Pressure>();
+        private List<WeatherRecord> messageQueue = new List<WeatherRecord>();
 
         [Test]
         public async Task MeasureTemperatureTest()
@@ -28,14 +26,11 @@ namespace Showcase.Test.IntegrationTests
 
             await testee.MeasureWeatherAsync(latitude: 47.57, longitude: 9.104, CancellationToken.None);
 
-            //Assert.That(temperatureQueue.Count, Is.EqualTo(1));
-            //Assert.That(temperatureQueue.First().Value, Is.EqualTo(21.2));
-            //Assert.That(temperatureQueue.First().Coordinates.Latitude, Is.EqualTo(47.57));
-            //Assert.That(temperatureQueue.First().Coordinates.Longitude, Is.EqualTo(9.104));
-            //Assert.That(pressureQueue.Count, Is.EqualTo(1));
-            //Assert.That(pressureQueue.First().Value, Is.EqualTo(1234));
-            //Assert.That(pressureQueue.First().Coordinates.Latitude, Is.EqualTo(47.57));
-            //Assert.That(pressureQueue.First().Coordinates.Longitude, Is.EqualTo(9.104));
+            Assert.That(messageQueue.Count, Is.EqualTo(1));
+            Assert.That(messageQueue.First().Temperature, Is.EqualTo(21.2));
+            Assert.That(messageQueue.First().Pressure, Is.EqualTo(1234));
+            Assert.That(messageQueue.First().Latitude, Is.EqualTo(47.57));
+            Assert.That(messageQueue.First().Longitude, Is.EqualTo(9.104));
         }
 
         private void ArrangeWeatherMeasurementMocks(WeatherRecord weatherRecord)
@@ -45,12 +40,8 @@ namespace Showcase.Test.IntegrationTests
                 .Returns(Task.FromResult(weatherRecord));
 
             weatherMeasurementSenderMock
-                .Setup(t => t.SendMeasurement(It.IsAny<Temperature>(), CancellationToken.None))
-                .Callback((Temperature t, CancellationToken c) => temperatureQueue.Add(t));
-
-            weatherMeasurementSenderMock
-                .Setup(t => t.SendMeasurement(It.IsAny<Pressure>(), CancellationToken.None))
-                .Callback((Pressure p, CancellationToken c) => pressureQueue.Add(p));
+                .Setup(t => t.SendMeasurement(It.IsAny<WeatherRecord>(), CancellationToken.None))
+                .Callback((WeatherRecord w, CancellationToken c) => messageQueue.Add(w));
         }
     }
 }

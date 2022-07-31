@@ -20,7 +20,7 @@ namespace Showcase.Test.UnitTests
         }
 
         [Test]
-        public async Task TemperatureMeasurementTest()
+        public async Task OpenWeatherMapMeasurementTest()
         {
             var testee = new OpenWeatherMapMeasurement(configuration!);
 

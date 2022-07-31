@@ -13,7 +13,7 @@ namespace Showcase.Infrastructure.Persistence.Database
             this.measurementDbContext = measurementDbContext;
         }
 
-        public async Task<Location?> GetLoctionAsync(double latitued, double longitued, CancellationToken cancellationToken)
+        public async Task<Location?> GetLocationAsync(double latitued, double longitued, CancellationToken cancellationToken)
         {
             return await measurementDbContext.Locations.SingleOrDefaultAsync(w => w.Coordinates.Latitude == latitued && w.Coordinates.Longitude == longitued, cancellationToken);
         }
