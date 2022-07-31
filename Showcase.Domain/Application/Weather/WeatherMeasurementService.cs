@@ -28,7 +28,7 @@ namespace Showcase.Measurement.Application.Weather
             var location = await weatherMeasurementPersistance.GetLocationAsync(latitued: weatherRecord.Latitude, longitued: weatherRecord.Longitude, cancellationToken);
             if (location == null)
             {
-                location = Location.New(latitude: weatherRecord.Latitude, longitude: weatherRecord.Longitude);
+                location = Location.New(latitude: weatherRecord.Latitude, longitude: weatherRecord.Longitude, city: weatherRecord.City, country: weatherRecord.Country);
             }
 
             weatherMeasurementPersistance.Add(Temperature.New(weatherRecord.Timestamp, weatherRecord.Temperature, location));

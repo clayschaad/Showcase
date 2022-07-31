@@ -25,7 +25,14 @@ namespace Showcase.Infrastructure.Measurement.OpenWeatherMap
                 throw new MeasurementException("Cannot parse measurement result");
             }
 
-            return new WeatherRecord(Timestamp: DateTime.UtcNow, Latitude: latitude, Longitude: longitude, Temperature: weatherMeasurement.Main.Temp, Pressure: weatherMeasurement.Main.Pressure);
+            return new WeatherRecord
+                (Timestamp: DateTime.UtcNow, 
+                Latitude: latitude, 
+                Longitude: longitude, 
+                City: weatherMeasurement.Name,
+                Country: weatherMeasurement.Sys.Country,
+                Temperature: weatherMeasurement.Main.Temp, 
+                Pressure: weatherMeasurement.Main.Pressure);
         }
     }
 }

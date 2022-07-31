@@ -21,16 +21,26 @@ namespace Showcase.Test.IntegrationTests
         [Test]
         public async Task MeasureTemperatureTest()
         {
-            ArrangeWeatherMeasurementMocks(new WeatherRecord(Timestamp: System.DateTime.UtcNow, Latitude: 47.57, Longitude: 9.104, Temperature: 21.2, Pressure: 1234));
+            var weatherRecord = new WeatherRecord(
+                Timestamp: System.DateTime.UtcNow,
+                Latitude: 47.36,
+                Longitude: 8.53,
+                City: "Zurich",
+                Country: "CH",
+                Temperature: 21.2,
+                Pressure: 1234);
+            ArrangeWeatherMeasurementMocks(weatherRecord);
             var testee = new WeatherMeasurementService(weatherMeasurementMock.Object, weatherMeasurementSenderMock.Object, weatherMeasurementPersistanceMock.Object);
 
-            await testee.MeasureWeatherAsync(latitude: 47.57, longitude: 9.104, CancellationToken.None);
+            await testee.MeasureWeatherAsync(latitude: weatherRecord.Latitude, longitude: weatherRecord.Longitude, CancellationToken.None);
 
             Assert.That(messageQueue.Count, Is.EqualTo(1));
-            Assert.That(messageQueue.First().Temperature, Is.EqualTo(21.2));
-            Assert.That(messageQueue.First().Pressure, Is.EqualTo(1234));
-            Assert.That(messageQueue.First().Latitude, Is.EqualTo(47.57));
-            Assert.That(messageQueue.First().Longitude, Is.EqualTo(9.104));
+            Assert.That(messageQueue.First().Temperature, Is.EqualTo(weatherRecord.Temperature));
+            Assert.That(messageQueue.First().Pressure, Is.EqualTo(weatherRecord.Pressure));
+            Assert.That(messageQueue.First().City, Is.EqualTo(weatherRecord.City));
+            Assert.That(messageQueue.First().Country, Is.EqualTo(weatherRecord.Country));
+            Assert.That(messageQueue.First().Latitude, Is.EqualTo(weatherRecord.Latitude));
+            Assert.That(messageQueue.First().Longitude, Is.EqualTo(weatherRecord.Longitude));
         }
 
         private void ArrangeWeatherMeasurementMocks(WeatherRecord weatherRecord)
