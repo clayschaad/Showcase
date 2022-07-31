@@ -13,30 +13,23 @@ namespace Showcase.Infrastructure.Persistence.Database
             this.measurementDbContext = measurementDbContext;
         }
 
-        public async Task<Temperature?> GetTemperatureAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Location?> GetLoctionAsync(double latitued, double longitued, CancellationToken cancellationToken)
         {
-            return await measurementDbContext.Temperatures.SingleOrDefaultAsync(t => t.Id == id, cancellationToken);
+            return await measurementDbContext.Locations.SingleOrDefaultAsync(w => w.Coordinates.Latitude == latitued && w.Coordinates.Longitude == longitued, cancellationToken);
         }
 
-        public async Task<IReadOnlyList<Temperature>> LoadTemperaturesAsync(CancellationToken cancellationToken)
-        {
-            return await measurementDbContext.Temperatures.OrderByDescending(t => t.Timestamp).ToListAsync(cancellationToken);
-        }
-
-        public async Task SaveTemperatureAsync(Temperature temperature, CancellationToken cancellationToken)
-        {
-            measurementDbContext.Temperatures.Add(temperature);
-            await measurementDbContext.SaveChangesAsync(cancellationToken);
-        }
-
-        public async Task<IReadOnlyList<Pressure>> LoadPressuresAsync(CancellationToken cancellationToken)
-        {
-            return await measurementDbContext.Pressures.OrderByDescending(t => t.Timestamp).ToListAsync(cancellationToken);
-        }
-
-        public async Task SavePressureAsync(Pressure pressure, CancellationToken cancellationToken)
+        public void Add(Pressure pressure)
         {
             measurementDbContext.Pressures.Add(pressure);
+        }
+
+        public void Add(Temperature temperature)
+        {
+            measurementDbContext.Temperatures.Add(temperature);
+        }
+
+        public async Task SaveChangesAsync(CancellationToken cancellationToken)
+        {
             await measurementDbContext.SaveChangesAsync(cancellationToken);
         }
     }

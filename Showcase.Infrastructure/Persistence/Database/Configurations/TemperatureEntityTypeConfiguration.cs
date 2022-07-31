@@ -8,7 +8,8 @@ namespace Showcase.Infrastructure.Persistence.Database
     {
         public void Configure(EntityTypeBuilder<Temperature> builder)
         {
-            builder.OwnsOne(e => e.Coordinates, CoordinatesEntityTypeConfiguration.Configure);
+            builder.HasKey(t => t.Id);
+            builder.HasOne(t => t.Location);
         }
     }
 }

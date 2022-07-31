@@ -2,21 +2,27 @@
 {
     public class Pressure
     {
-        public Guid Id { get; set; }
-        public DateTime Timestamp { get; set; }
-        public double Value { get; set; }
+        public Guid Id { get; }
+        public double Value { get; private set; }
+        public DateTime Timestamp { get; private set; }
+        public Location Location { get; private set; } = null!;
 
-        public Coordinates? Coordinates { get; set; }
-
-        public static Pressure NewMeasurement(double value, DateTime timestamp, Coordinates coordinates)
+        private Pressure()
         {
-            return new Pressure
-            {
-                Id = Guid.NewGuid(),
-                Timestamp = timestamp,
-                Value = value,
-                Coordinates = coordinates
-            };
+            // EF needed
+        }
+
+        private Pressure(Guid id, DateTime timestamp, double value, Location location)
+        {
+            Id = id;
+            Timestamp = timestamp;
+            Value = value;
+            Location = location;
+        }
+
+        public static Pressure New(DateTime timestamp, double value, Location location)
+        {
+            return new Pressure(Guid.NewGuid(), timestamp, value, location);
         }
     }
 }

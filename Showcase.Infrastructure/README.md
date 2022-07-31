@@ -20,6 +20,6 @@ https://www.rabbitmq.com/
 
 https://docs.microsoft.com/en-us/ef/core/get-started/overview/first-app?tabs=netcore-cli
 
-dotnet ef migrations add InitialCreate
+dotnet ef migrations add InitialCreate --output-dir Persistence/Database/Migrations
 
 dotnet ef database update

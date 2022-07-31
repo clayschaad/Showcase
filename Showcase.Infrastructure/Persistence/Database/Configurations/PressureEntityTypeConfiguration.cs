@@ -8,7 +8,8 @@ namespace Showcase.Infrastructure.Persistence.Database
     {
         public void Configure(EntityTypeBuilder<Pressure> builder)
         {
-            builder.OwnsOne(e => e.Coordinates, CoordinatesEntityTypeConfiguration.Configure);
+            builder.HasKey(p => p.Id);
+            builder.HasOne(p => p.Location);
         }
     }
 }

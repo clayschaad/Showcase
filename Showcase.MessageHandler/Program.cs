@@ -5,9 +5,9 @@ using RabbitMQ.Client;
 using Showcase.Infrastructure;
 using Showcase.Infrastructure.Messaging;
 using Showcase.Infrastructure.Messaging.RabbitMQ;
+using Showcase.Measurement.Application;
 using Showcase.Measurement.Domain.Finance.Aggregate;
 using Showcase.Measurement.Domain.Weather;
-using Showcase.Measurement.Domain.Weather.Aggregate;
 
 namespace Showcase.MessageHandler
 {
@@ -28,9 +28,8 @@ namespace Showcase.MessageHandler
             {
                 RabbitMqHelper.Init(channel, options.Queue);
 
-                var weatherMeasurementPersistance = serviceScope.ServiceProvider.GetRequiredService<IWeatherMeasurementPersistance>();
-                RabbitMqHelper.Consume<Temperature>(channel, options.Queue, (T) => weatherMeasurementPersistance.SaveTemperatureAsync(T, CancellationToken.None));
-                RabbitMqHelper.Consume<Pressure>(channel, options.Queue, (T) => weatherMeasurementPersistance.SavePressureAsync(T, CancellationToken.None));
+                var weatherMeasurementService = serviceScope.ServiceProvider.GetRequiredService<IWeatherMeasurementService>();
+                RabbitMqHelper.Consume<WeatherRecord>(channel, options.Queue, async (T) => await weatherMeasurementService.SaveWeatherAsync(T, CancellationToken.None));
                 
                 RabbitMqHelper.Consume<StockRate>(channel, options.Queue, (T) => { });
 

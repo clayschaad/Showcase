@@ -6,37 +6,35 @@ namespace Showcase.Measurement.Application.Weather
 {
     public class WeatherMeasurementService : IWeatherMeasurementService
     {
-        private readonly IWeatherMeasurement weatherMeasurement;
+        private readonly IWeatherMeasurement weatherMeasurementService;
         private readonly IWeatherMeasurementPersistance weatherMeasurementPersistance;
         private readonly IMeasurementSender measurementSender;
 
-        public WeatherMeasurementService(IWeatherMeasurement weatherMeasurement, IWeatherMeasurementPersistance weatherMeasurementPersistance, IMeasurementSender measurementSender)
+        public WeatherMeasurementService(IWeatherMeasurement weatherMeasurementService, IWeatherMeasurementPersistance weatherMeasurementPersistance, IMeasurementSender measurementSender)
         {
-            this.weatherMeasurement = weatherMeasurement;
+            this.weatherMeasurementService = weatherMeasurementService;
             this.weatherMeasurementPersistance = weatherMeasurementPersistance;
             this.measurementSender = measurementSender;
         }
 
-        public async Task<IReadOnlyList<Temperature>> GetTemperaturesAsync(CancellationToken cancellationToken)
-        {
-            return await weatherMeasurementPersistance.LoadTemperaturesAsync(cancellationToken);
-        }
-
-        public async Task<IReadOnlyList<Pressure>> GetPressuresAsync(CancellationToken cancellationToken)
-        {
-            return await weatherMeasurementPersistance.LoadPressuresAsync(cancellationToken);
-        }
-
         public async Task MeasureWeatherAsync(double latitude, double longitude, CancellationToken cancellationToken)
         {
-            var coordinates = Coordinates.New(latitude: latitude, longitude: longitude);
-            var weatherMeasurementResult = await weatherMeasurement.GetWeatherMeasurementAsync(coordinates, cancellationToken);
+            var weatherRecord = await weatherMeasurementService.GetWeatherMeasurementAsync(latitude: latitude, longitude: longitude, cancellationToken);
+            await measurementSender.SendMeasurement(weatherRecord, cancellationToken);
+        }
 
-            var temperature = Temperature.NewMeasurement(weatherMeasurementResult.Temperature, DateTime.UtcNow, coordinates);
-            await measurementSender.SendMeasurement(temperature, cancellationToken);
+        public async Task SaveWeatherAsync(WeatherRecord weatherRecord, CancellationToken cancellationToken)
+        {
+            var location = await weatherMeasurementPersistance.GetLoctionAsync(latitued: weatherRecord.Latitude, longitued: weatherRecord.Longitude, cancellationToken);
+            if (location == null)
+            {
+                location = Location.New(latitude: weatherRecord.Latitude, longitude: weatherRecord.Longitude);
+            }
 
-            var pressure = Pressure.NewMeasurement(weatherMeasurementResult.Pressure, DateTime.UtcNow, coordinates);
-            await measurementSender.SendMeasurement(pressure, cancellationToken);
+            weatherMeasurementPersistance.Add(Temperature.New(weatherRecord.Timestamp, weatherRecord.Temperature, location));
+            weatherMeasurementPersistance.Add(Pressure.New(weatherRecord.Timestamp, weatherRecord.Pressure, location));
+
+            await weatherMeasurementPersistance.SaveChangesAsync(cancellationToken);
         }
     }
 }

@@ -35,10 +35,11 @@ namespace Showcase.Infrastructure.Messaging.RabbitMQ
                 var body = e.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
                 var obj = JsonSerializer.Deserialize<T>(message);
-                action(obj);
+                action(obj!);
+                channel.BasicAck(e.DeliveryTag, false);
             };
 
-            channel.BasicConsume(queue, true, consumer);
+            channel.BasicConsume(queue, false, consumer);
         }
     }
 }

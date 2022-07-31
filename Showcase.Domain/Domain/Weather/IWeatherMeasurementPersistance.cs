@@ -4,11 +4,9 @@ namespace Showcase.Measurement.Domain.Weather
 {
     public interface IWeatherMeasurementPersistance
     {
-        Task<IReadOnlyList<Temperature>> LoadTemperaturesAsync(CancellationToken cancellationToken);
-        Task SaveTemperatureAsync(Temperature temperature, CancellationToken cancellationToken);
-        Task<Temperature?> GetTemperatureAsync(Guid id, CancellationToken cancellationToken);
-
-        Task<IReadOnlyList<Pressure>> LoadPressuresAsync(CancellationToken cancellationToken);
-        Task SavePressureAsync(Pressure pressure, CancellationToken cancellationToken);
+        Task<Location?> GetLoctionAsync(double latitued, double longitued, CancellationToken cancellationToken);
+        void Add(Pressure pressure);
+        void Add(Temperature temperature);
+        Task SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
