@@ -7,10 +7,10 @@ namespace Showcase.Measurement.Application.Weather
     public class WeatherMeasurementService : IWeatherMeasurementService
     {
         private readonly IWeatherMeasurement weatherMeasurementService;
-        private readonly IWeatherMeasurementPersistance weatherMeasurementPersistance;
         private readonly IMeasurementSender measurementSender;
+        private readonly IWeatherMeasurementPersistance weatherMeasurementPersistance;
 
-        public WeatherMeasurementService(IWeatherMeasurement weatherMeasurementService, IWeatherMeasurementPersistance weatherMeasurementPersistance, IMeasurementSender measurementSender)
+        public WeatherMeasurementService(IWeatherMeasurement weatherMeasurementService, IMeasurementSender measurementSender, IWeatherMeasurementPersistance weatherMeasurementPersistance)
         {
             this.weatherMeasurementService = weatherMeasurementService;
             this.weatherMeasurementPersistance = weatherMeasurementPersistance;

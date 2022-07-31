@@ -4,11 +4,11 @@ using Showcase.Measurement.Domain.Weather.Aggregate;
 
 namespace Showcase.Infrastructure.Persistence.Database
 {
-    public class DatabaseWeatherMeasurementPersistance : IWeatherMeasurementPersistance
+    public class WeatherMeasurementPersistance : IWeatherMeasurementPersistance
     {
         private readonly MeasurementDbContext measurementDbContext;
 
-        public DatabaseWeatherMeasurementPersistance(MeasurementDbContext measurementDbContext)
+        public WeatherMeasurementPersistance(MeasurementDbContext measurementDbContext)
         {
             this.measurementDbContext = measurementDbContext;
         }

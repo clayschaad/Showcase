@@ -11,13 +11,53 @@ using Showcase.Infrastructure.Persistence.Database;
 namespace Showcase.Infrastructure.Persistence.Database.Migrations
 {
     [DbContext(typeof(MeasurementDbContext))]
-    [Migration("20220731083658_InitialCreate")]
+    [Migration("20220731152141_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.7");
+
+            modelBuilder.Entity("Showcase.Measurement.Domain.Finance.Aggregate.Stock", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Symbol")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Stock");
+                });
+
+            modelBuilder.Entity("Showcase.Measurement.Domain.Finance.Aggregate.StockRate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Close")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("Open")
+                        .HasColumnType("REAL");
+
+                    b.Property<Guid>("StockId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StockId");
+
+                    b.ToTable("StockRate");
+                });
 
             modelBuilder.Entity("Showcase.Measurement.Domain.Weather.Aggregate.Location", b =>
                 {
@@ -74,6 +114,17 @@ namespace Showcase.Infrastructure.Persistence.Database.Migrations
                     b.ToTable("Temperature");
                 });
 
+            modelBuilder.Entity("Showcase.Measurement.Domain.Finance.Aggregate.StockRate", b =>
+                {
+                    b.HasOne("Showcase.Measurement.Domain.Finance.Aggregate.Stock", "Stock")
+                        .WithMany()
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Stock");
+                });
+
             modelBuilder.Entity("Showcase.Measurement.Domain.Weather.Aggregate.Location", b =>
                 {
                     b.OwnsOne("Showcase.Measurement.Domain.Weather.Aggregate.Coordinates", "Coordinates", b1 =>
@@ -104,7 +155,7 @@ namespace Showcase.Infrastructure.Persistence.Database.Migrations
                     b.HasOne("Showcase.Measurement.Domain.Weather.Aggregate.Location", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Location");
@@ -115,7 +166,7 @@ namespace Showcase.Infrastructure.Persistence.Database.Migrations
                     b.HasOne("Showcase.Measurement.Domain.Weather.Aggregate.Location", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Location");

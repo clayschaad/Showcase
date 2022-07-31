@@ -28,7 +28,7 @@ namespace Showcase.Infrastructure.Measurement.Polygon
 
             var jsonString = await response.Content.ReadAsStringAsync(cancellationToken);
             var stockMeasurement = JsonSerializer.Deserialize<PolygonModel>(jsonString);
-            return new StockRecord(Open: stockMeasurement!.Open, Close: stockMeasurement.Close, LastRefresh: stockMeasurement.From);
+            return new StockRecord(Symbol: symbol, Open: stockMeasurement!.Open, Close: stockMeasurement.Close, LastRefresh: stockMeasurement.From);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Showcase.Infrastructure
         {
             services.AddTransient(typeof(IWeatherMeasurementService), typeof(WeatherMeasurementService));
             services.AddTransient(typeof(IWeatherMeasurement), typeof(OpenWeatherMapMeasurement));
-            services.AddTransient(typeof(IWeatherMeasurementPersistance), typeof(DatabaseWeatherMeasurementPersistance));
+            services.AddTransient(typeof(IWeatherMeasurementPersistance), typeof(WeatherMeasurementPersistance));
 
             return services;
         }
@@ -46,6 +46,7 @@ namespace Showcase.Infrastructure
         {
             services.AddTransient(typeof(IFinanceMeasurementService), typeof(FinanceMeasurementService));
             services.AddTransient(typeof(IFinanceMeasurement), typeof(PolygonMeasurement));
+            services.AddTransient(typeof(IFinanceMeasurementPersistance), typeof(FinanceMeasurementPersistance));
 
             return services;
         }

@@ -8,19 +8,32 @@ namespace Showcase.Measurement.Application.Finance
     {
         private readonly IFinanceMeasurement financeMeasurement;
         private readonly IMeasurementSender measurementSender;
+        private readonly IFinanceMeasurementPersistance financeMeasurementPersistance;
 
-        public FinanceMeasurementService(IFinanceMeasurement financeMeasurement, IMeasurementSender measurementSender)
+        public FinanceMeasurementService(IFinanceMeasurement financeMeasurement, IMeasurementSender measurementSender, IFinanceMeasurementPersistance financeMeasurementPersistance)
         {
             this.financeMeasurement = financeMeasurement;
             this.measurementSender = measurementSender;
+            this.financeMeasurementPersistance = financeMeasurementPersistance;
         }
 
         public async Task MeasureStockAsync(string symbol, DateTime date, CancellationToken cancellationToken)
         {
-            var measurement = await financeMeasurement.GetStockMeasurementAsync(symbol, date, cancellationToken);
+            var stockRecord = await financeMeasurement.GetStockMeasurementAsync(symbol, date, cancellationToken);
+            await measurementSender.SendMeasurement(stockRecord, cancellationToken);
+        }
 
-            var rate = StockRate.NewMeasurement(open: measurement.Open, close: measurement.Close, symbol: symbol, timestamp: measurement.LastRefresh);
-            await measurementSender.SendMeasurement(rate, cancellationToken);
+        public async Task SaveStockAsync(StockRecord stockRecord, CancellationToken cancellationToken)
+        {
+            var stock = await financeMeasurementPersistance.GetStockAsync(stockRecord.Symbol, cancellationToken);
+            if (stock == null)
+            {
+                stock = Stock.New(stockRecord.Symbol);
+            }
+
+            financeMeasurementPersistance.Add(StockRate.New(timestamp: stockRecord.LastRefresh, open: stockRecord.Open, close: stockRecord.Close, stock));
+
+            await financeMeasurementPersistance.SaveChangesAsync(cancellationToken);
         }
     }
 }

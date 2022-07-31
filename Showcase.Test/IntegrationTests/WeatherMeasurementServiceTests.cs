@@ -22,7 +22,7 @@ namespace Showcase.Test.IntegrationTests
         public async Task MeasureTemperatureTest()
         {
             ArrangeWeatherMeasurementMocks(new WeatherRecord(Timestamp: System.DateTime.UtcNow, Latitude: 47.57, Longitude: 9.104, Temperature: 21.2, Pressure: 1234));
-            var testee = new WeatherMeasurementService(weatherMeasurementMock.Object, weatherMeasurementPersistanceMock.Object, weatherMeasurementSenderMock.Object);
+            var testee = new WeatherMeasurementService(weatherMeasurementMock.Object, weatherMeasurementSenderMock.Object, weatherMeasurementPersistanceMock.Object);
 
             await testee.MeasureWeatherAsync(latitude: 47.57, longitude: 9.104, CancellationToken.None);
 

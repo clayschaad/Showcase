@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Showcase.Measurement.Domain.Finance.Aggregate;
 using Showcase.Measurement.Domain.Weather.Aggregate;
 
 namespace Showcase.Infrastructure.Persistence.Database
@@ -9,6 +10,9 @@ namespace Showcase.Infrastructure.Persistence.Database
         public DbSet<Location> Locations { get; set; } = null!;
         public DbSet<Temperature> Temperatures { get; set; } = null!;
         public DbSet<Pressure> Pressures { get; set; } = null!;
+
+        public DbSet<Stock> Stocks { get; set; } = null!;
+        public DbSet<StockRate> StockRates { get; set; } = null!;
 
         public MeasurementDbContext(DbContextOptions<MeasurementDbContext> options) : base(options)
         { }

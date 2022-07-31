@@ -1,4 +1,4 @@
 ﻿namespace Showcase.Measurement.Domain.Finance
 {
-    public record StockRecord(double Open, double Close, DateTime LastRefresh);
+    public record StockRecord(string Symbol, double Open, double Close, DateTime LastRefresh);
 }
